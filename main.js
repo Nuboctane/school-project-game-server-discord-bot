@@ -16,7 +16,7 @@ client.once('ready', () => {
 });
 
 let chance = 0;
-let PERFIX = '-';
+let PERFIX = '!';
  
 const fs = require('fs');
  
@@ -53,13 +53,13 @@ client.on('message', message => {
   }
 });
   client.on('message', message => {
- 
-    if (!message.content.startsWith(PERFIX) || message.author.client) return;
+    if (!message.content.startsWith(PERFIX) || message.author.bot) return;
  
     const args = message.content.slice(PERFIX.length).split(/ +/);
     const command = args.shift().toLowerCase();
-    if (command === 'reactionrole') {
-        client.commands.get('reactionrole').execute(message, args, Discord, client);
+    if (command === 'verify') {
+        client.commands.get('verify').execute(message, args, Discord, client);
+        message.delete();
     } 
 
 });
@@ -113,4 +113,3 @@ console.log(xpToNextLevel + 'xp needed for next level');
 
 }); 
 
-client.login("OTEwMDgwNjE0NDEyMjE0MzAz.YZNong.NeuQV9KtpIPJgI1RhlOV2bcJJ0Y");

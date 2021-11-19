@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const random = require('random');
 const jsonfile = require('jsonfile');
+const { MessageEmbed } = require('discord.js');
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"] });
 
@@ -52,6 +53,7 @@ client.on('message', message => {
     }
   }
 });
+
   client.on('message', message => {
     if (!message.content.startsWith(PERFIX) || message.author.bot) return;
  
@@ -64,10 +66,73 @@ client.on('message', message => {
 
 });
 
+let q = 1;
+let game = "a";
+let time = "a";
+let players = "a";
+let note = "a";
+const schedule_channel_id = 911217051111161874;
+let old_message = null;
+client.on('message', message => {
+  if (message.author.bot) return;
+
+  if (message.content.toLowerCase() == "-schedule" && message.channel.id == schedule_channel_id && q == 1 ) {
+    old_message = message;
+      message.channel.send('what game?');
+      q++;
+  }
+  if (q == 2 && message.channel.id == schedule_channel_id && message != old_message){
+    game = message.content;
+    old_message = message;
+
+    message.channel.send('what time?');
+    q++;
+
+  }
+  if (q == 3 && message.channel.id == schedule_channel_id  && message != old_message){
+    time = message.content;
+    old_message = message;
+
+    message.channel.send('who do you want to invite?');
+    q++;
+
+
+  }
+  if (q == 4 && message.channel.id == schedule_channel_id  && message != old_message){
+    players = message.content;
+    old_message = message;
+
+    message.channel.send('description?');
+    q++;
+
+  }
+  if (q == 5 && message.channel.id == schedule_channel_id  && message != old_message){
+      note = message.content;
+      old_message = message;
+
+      let embed = new MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('game: '+game)
+        .setAuthor('game event host by: ' + message.author.username, null, null)
+        .addField('time', time, true)
+        .addField('players', players, true)
+        .setFooter('description '+note, null)
+        message.guild.channels.cache.find(channel => channel.id == '911180133019287552').send({ embeds: [embed] });
+       
+         q = 1;
+         game = "a";
+         time = "a";
+         players = "a";
+         note = "a";
+         old_message = null;
+
+      }
+});
+
 
 var stats = {}; 
-if (fs.existsSync('stats.json')) { 
-stats = jsonfile.readFileSync('stats.json');
+if (fs.existsSync('./data/stats.json')) { 
+stats = jsonfile.readFileSync('./data/stats.json');
 }
 
 client.on('message', (message) => {
@@ -99,7 +164,7 @@ if (userStats.xp >= xpToNextLevel) {
   message.channel.send(message.author.username + ' has reached level ' + userStats.level)
 }
 
-jsonfile.writeFileSync('stats.json', stats);  
+jsonfile.writeFileSync('./data/stats.json', stats);  
 
 
 console.log(message.author.username + ' now has ' + userStats.xp);
@@ -113,3 +178,4 @@ console.log(xpToNextLevel + 'xp needed for next level');
 
 }); 
 
+client.login("OTEwMDgwNjE0NDEyMjE0MzAz.YZNong.rv8mHbXhr_SVqUGwfHeoP6IDtuY");

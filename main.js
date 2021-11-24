@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 const random = require('random');
 const jsonfile = require('jsonfile');
 const { MessageEmbed } = require('discord.js');
-
+const ROLE_5 =  '913000311407394866';
+const ROLE_10 = '913000462880477244';
+const ROLE_15 = '913000561534701579';
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"] });
 
 
@@ -23,14 +25,10 @@ const fs = require('fs');
  
 client.commands = new Discord.Collection();
  
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
- 
-    client.commands.set(command.name, command);
-}
 
 client.on('message', message => {
+  if(message.content == '!roledumb') {
+  console.log(message.guild.roles);}
   //
   if (message.channel.type == "DM"){ //if its a dm
   }
@@ -160,6 +158,15 @@ userStats.last_message = Date.now();
 const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 100;
 if (userStats.xp >= xpToNextLevel) { 
   userStats.level++;
+  if(userStats.level >= 5){
+message.member.addRole(ROLE_5);
+  }
+  else if (userStats.level >= 10){ 
+    message.member.addRole(ROLE_10);
+  }
+  else if (userStats.level >= 15){ 
+    message.member.addRole(ROLE_15);
+  }
   userStats.xp = userStats.xp - xpToNextLevel;
   message.channel.send(message.author.username + ' has reached level ' + userStats.level)
 }
@@ -178,4 +185,3 @@ console.log(xpToNextLevel + 'xp needed for next level');
 
 }); 
 
-client.login("OTEwMDgwNjE0NDEyMjE0MzAz.YZNong.rv8mHbXhr_SVqUGwfHeoP6IDtuY");

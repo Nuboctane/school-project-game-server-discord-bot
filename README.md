@@ -17,3 +17,6 @@ current:
 
 -replies to pings
 -level system
+-level role assign
+-verify system
+-make schedule commands

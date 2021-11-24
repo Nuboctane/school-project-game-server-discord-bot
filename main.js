@@ -159,13 +159,13 @@ const xpToNextLevel = 5 * Math.pow(userStats.level, 2) + 50 * userStats.level + 
 if (userStats.xp >= xpToNextLevel) { 
   userStats.level++;
   if(userStats.level >= 5){
-message.member.addRole(ROLE_5);
+    message.guild.members.cache.get(message.author.id).roles.add(ROLE_5);
   }
   else if (userStats.level >= 10){ 
-    message.member.addRole(ROLE_10);
+    message.guild.members.cache.get(message.author.id).roles.add(ROLE_10);
   }
   else if (userStats.level >= 15){ 
-    message.member.addRole(ROLE_15);
+    message.guild.members.cache.get(message.author.id).roles.add(ROLE_15);
   }
   userStats.xp = userStats.xp - xpToNextLevel;
   message.channel.send(message.author.username + ' has reached level ' + userStats.level)

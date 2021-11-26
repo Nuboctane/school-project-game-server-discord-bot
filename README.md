@@ -20,3 +20,4 @@ current:
 -level role assign
 -verify system
 -make schedule commands
+-add and remove personal roles to show what games you play or  what platforms you play on

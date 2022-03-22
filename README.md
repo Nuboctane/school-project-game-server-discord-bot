@@ -21,3 +21,5 @@ current:
 -verify system
 -make schedule commands
 -add and remove personal roles to show what games you play or  what platforms you play on
+
+![image](https://user-images.githubusercontent.com/72999487/159465081-f74e98cb-6bcc-44c9-a183-d589fd152760.png)
